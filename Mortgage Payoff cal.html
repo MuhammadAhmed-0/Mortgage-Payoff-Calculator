@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Payoff Calculator</title>
+    <style>
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+}
+
+/* Header */
+header {
+    background-color: #4A90E2;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #4A90E2;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Main Container */
+.calculator-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto;
+}
+
+h1 {
+    color: #4A90E2;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Currency Selector */
+.currency-selector {
+    margin-bottom: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.currency-selector label {
+    font-weight: bold;
+}
+
+select {
+    width: 70%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Input Fields */
+.input-fields {
+    margin-bottom: 20px;
+}
+
+.input-fields label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.input-fields input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4A90E2;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+/* Results */
+.results {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+}
+
+.results h2 {
+    color: #4A90E2;
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.results p {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.results p span {
+    font-weight: bold;
+    color: #4A90E2;
+}
+
+.results p strong {
+    font-size: 20px;
+}
+
+/* Result Item Styling */
+.results .result-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-left: 5px solid #4A90E2;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.results .result-item p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: #333;
+}
+
+.results .result-item p span {
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .calculator-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .currency-selector select {
+        width: 80%;
+    }
+
+    .results h2 {
+        font-size: 20px;
+    }
+
+    .results p {
+        font-size: 16px;
+    }
+}
+
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        Mortgage Payoff Calculator
+    </header>
+
+    <div class="calculator-container">
+        <h1>Mortgage Payoff Calculator</h1>
+
+        <!-- Currency Selector -->
+        <div class="currency-selector">
+            <label for="currency">Select Currency:</label>
+            <select id="currency">
+                <option value="USD">USD - United States Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="NZD">NZD - New Zealand Dollar</option>
+                <option value="SEK">SEK - Swedish Krona</option>
+                <option value="NOK">NOK - Norwegian Krone</option>
+                <option value="DKK">DKK - Danish Krone</option>
+                <option value="SGD">SGD - Singapore Dollar</option>
+                <option value="HKD">HKD - Hong Kong Dollar</option>
+                <option value="KRW">KRW - South Korean Won</option>
+                <option value="MXN">MXN - Mexican Peso</option>
+                <option value="BRL">BRL - Brazilian Real</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="CNY">CNY - Chinese Yuan</option>
+            </select>
+        </div>
+
+        <!-- Input Fields for Loan Calculation -->
+        <div class="input-fields">
+            <label for="loanAmount">Loan Amount:</label>
+            <input type="number" id="loanAmount" placeholder="Enter loan amount" />
+
+            <label for="interestRate">Interest Rate (%):</label>
+            <input type="number" id="interestRate" placeholder="Enter interest rate" />
+
+            <label for="loanTerm">Loan Term (years):</label>
+            <input type="number" id="loanTerm" placeholder="Enter loan term" />
+
+            <label for="extraPayment">Extra Payment (Optional):</label>
+            <input type="number" id="extraPayment" placeholder="Enter extra payment" />
+        </div>
+
+        <button id="calculateButton">Calculate</button>
+
+        <!-- Results -->
+        <div class="results" style="display: none;">
+            <h2>Results</h2>
+            <div class="result-item">
+                <p><span>Monthly Payment:</span> <strong id="monthlyPaymentResult">USD 0.00</strong></p>
+            </div>
+            <div class="result-item">
+                <p><span>Total Interest Paid:</span> <strong id="totalInterestResult">USD 0.00</strong></p>
+            </div>
+            <div class="result-item">
+                <p><span>New Payoff Time:</span> <strong id="totalPayoffTimeResult">0 years, 0 months</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Mortgage Calculator by Your Company
+    </footer>
+
+    <script>
+// Function to calculate and display the mortgage payoff results
+document.getElementById('calculateButton').addEventListener('click', async function () {
+    const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+    const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+    const loanTerm = parseInt(document.getElementById('loanTerm').value);
+    const extraPayment = parseFloat(document.getElementById('extraPayment').value);
+    const selectedCurrency = document.getElementById('currency').value;
+
+    // Check if required fields are filled correctly
+    if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTerm)) {
+        alert("Please fill in all fields with valid values.");
+        return;
+    }
+
+    // If no extra payment is entered, set it to 0
+    const extraPaymentAmount = isNaN(extraPayment) ? 0 : extraPayment;
+
+    // Calculate Monthly Payment (Standard Mortgage Formula)
+    const principal = loanAmount;
+    const monthlyInterestRate = interestRate / 12;
+    const numberOfPayments = loanTerm * 12;
+    const monthlyPayment = principal * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+
+    // Calculate Total Interest & New Payoff Time with Extra Payments (if any)
+    let remainingBalance = principal;
+    let totalInterest = 0;
+    let months = 0;
+
+    while (remainingBalance > 0) {
+        const interest = remainingBalance * monthlyInterestRate;
+        let principalPayment = monthlyPayment - interest;
+        if (extraPaymentAmount > 0) {
+            principalPayment += extraPaymentAmount;
+        }
+        remainingBalance -= principalPayment;
+        totalInterest += interest;
+        months++;
+        if (remainingBalance < 0) break;
+    }
+
+    const totalPayoffTime = months / 12; // Convert to years
+
+    // Show results
+    document.getElementById('monthlyPaymentResult').textContent = `${selectedCurrency} ${monthlyPayment.toFixed(2)}`;
+    document.getElementById('totalInterestResult').textContent = `${selectedCurrency} ${totalInterest.toFixed(2)}`;
+    document.getElementById('totalPayoffTimeResult').textContent = formatPayoffTime(totalPayoffTime);
+
+    // Display results section
+    document.querySelector('.results').style.display = 'block';
+});
+
+// Function to format total payoff time into years, months, and days
+function formatPayoffTime(totalTimeInYears) {
+    const years = Math.floor(totalTimeInYears);
+    const months = Math.floor((totalTimeInYears - years) * 12);
+    const days = Math.round(((totalTimeInYears - years) * 365.25) % 30);
+
+    return `${years} years, ${months} months, ${days} days`;
+}
+
+</script>
+</body>
+</html>
